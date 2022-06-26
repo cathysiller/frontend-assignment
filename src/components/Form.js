@@ -3,7 +3,23 @@ import styled from 'styled-components';
 import Button from "./Button";
 import Checkbox from "./Checkbox";
 import InputField from "./InputField";
+import Success from "./Success";
 
+const Div = styled.div`
+  background-color: #F7F8F8;
+  left: 50%;
+  //margin: auto auto;
+  //max-height: 534px;
+  //max-width: 622px;
+  padding: 80px 110px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  max-height: 534px;
+  max-width: 622px;
+  width: 100%;
+`;
 
 const Header = styled.h1`
   color: #141E35;
@@ -13,21 +29,9 @@ const Header = styled.h1`
   font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 39px;
+  margin: auto auto 32px;
   text-align: center;
-  margin: 0 0 32px;
   width: 464px;
-`;
-
-const Div = styled.div`
-  background-color: #F7F8F8;
-  left: 50%;
-  margin: auto auto;
-  max-height: 534px;
-  max-width: 622px;
-  padding: 80px 110px;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
 `;
 
 const StyledForm = styled.form`
@@ -69,17 +73,19 @@ const Form = () => {
   const handleCheck = (e) => {
     const checked = e.target.checked;
     if (!checked) {
-      console.log('I AM NOT CHECKED')
+      //console.log('I AM NOT CHECKED')
       setFormState({
         ...formState,
+        signupSuccessful: false,
         errorCheckboxMessage: "Required"
       });
       return false;
     } 
 
-    console.log('I AM CHECKED')
+    //console.log('I AM CHECKED')
     setFormState({
       ...formState,
+      //signupSuccessful: true,
       errorCheckboxMessage: ""
     });
     return checked === true
@@ -136,6 +142,18 @@ const Form = () => {
     return true;
   }
 
+  const isCheckboxValid = (e) =>  {
+    const value = e.target.checked
+    console.log(value)
+
+    setFormState({
+      ...formState,
+      //signupSuccessful: true,
+      errorCheckboxMessage: ""
+    });
+    return true
+  }
+
   const handleChange = (e) => {
     //let passwordError = "";
 
@@ -160,7 +178,8 @@ const Form = () => {
     const emailValid = isEmailValid(email);
     //const checkboxValid = handleCheck(checkbox)
 
-    //console.log(checkbox)
+    console.log(checkbox)
+    //console.log(checked)
 
     if (empty) {
       setFormState({
@@ -188,58 +207,71 @@ const Form = () => {
   };
 
   return (
-    <Div>
-      <Header>
-        Let’s sign you up for Timescale Cloud
-      </Header>
+    <>
+    {signupSuccessful && !loading ? (
+      <Div>
+        <Success />
+      </Div>
+    ) : (
+      <Div>
+        <Header>
+          Let’s sign you up for Timescale Cloud
+        </Header>
 
 
-      <StyledForm onSubmit={onSubmit}>
-        <InputField
-          error={errorEmailMessage}
-          id="email"
-          label="Email address"
-          onChange={handleChange}
-          required
-          type="text"
-          value={email}
-        />
-        <InputField
-          error={errorPasswordMessage}
-          id="password"
-          isPassword
-          label="Create password"
-          onChange={handleChange}
-          required
-          type="password"
-          value={password}
-        />
-        <Checkbox
-          //error={error}
-          //checked={isCheckboxValid} 
-          error={errorCheckboxMessage}
-          id={checkbox}
-          onChange={handleCheck}
-          required
-          type="checkbox"
-        />
-        <Button
-          //disabled={!formState.email}
-          error={errorCheckboxMessage}
-          name="action"
-          onClick={onSubmit}
-          type="submit"
-        >
-          {!loading && `Sign up`}
-        </Button>
+        <StyledForm onSubmit={onSubmit}>
+          <InputField
+            error={errorEmailMessage}
+            id="email"
+            label="Email address"
+            onChange={handleChange}
+            required
+            type="text"
+            value={email}
+          />
+          <InputField
+            error={errorPasswordMessage}
+            id="password"
+            isPassword
+            label="Create password"
+            onChange={handleChange}
+            required
+            type="password"
+            value={password}
+          />
+          <Checkbox
+            //error={error}
+            //checked={isCheckboxValid} 
+            error={errorCheckboxMessage}
+            id={checkbox}
+            onChange={handleCheck}
+            required
+            type="checkbox"
 
-        {signupSuccessful && !loading ? (
-          <p>You have succefully create and account 👏🏾</p>
-        ) : (
-          <p>You have NOT succefully create and account</p>
-        )}
-      </StyledForm>
-    </Div>
+            onClick={isCheckboxValid}
+          />
+          <Button
+            //disabled={!formState.email}
+            error={errorCheckboxMessage}
+            name="action"
+            onClick={onSubmit}
+            primary={true}
+            type="submit"
+          >
+            {!loading && `Sign up`}
+          </Button>
+
+          {loading && 
+            <p>THIS IS LOADING 👏🏾</p>
+          }
+
+          {signupSuccessful && 
+            <p>THIS IS SUCCESSFUL 👏🏾</p>
+          }
+        </StyledForm>
+      </Div>
+    )}
+    </>
 )}
 
 export default Form;
