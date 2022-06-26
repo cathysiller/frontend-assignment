@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
-  background-color: #fdb515;
-  border: 2px solid #fdb515;
+  //background-color: #fdb515;
+  //border: 2px solid #fdb515;
   box-sizing: border-box;
-  color: #141e35;
+  //color: #141e35;
   cursor: pointer;
   display: flex;
   font-family: Inter, sans-serif;
@@ -24,17 +24,22 @@ const StyledButton = styled.button`
   white-space: nowrap;
   width: 100%;
 
-  /*
-  :disabled {
-    background-color: #FEDA8A;
+  /* Adapt the colours based on primary or secondary */
+  background: ${props => props.primary ? "#fdb515" : "#1472EC"};
+  color: ${props => props.primary ? "#141e35" : "#ffffff"};
+  border: ${props => props.primary ? "2px solid #fdb515" : "2px solid #1472EC"};
+
+  :hover {
+    background: ${props => props.primary ? "#FEDA8A" : "#8CBBF9"};
+    color: ${props => props.primary ? "#141E35" : "#ffffff"};
   }
-  */
 `
 
 const Button = ({ 
   disabled,
   name,
   onClick,
+  primary,
   type
 }) => {
 
@@ -42,6 +47,7 @@ const Button = ({
     <StyledButton
       //disabled={disabled}
       name={name}
+      primary={primary}
       onClick={onClick}
       type={type}
     >
