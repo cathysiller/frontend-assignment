@@ -64,7 +64,7 @@ const Form = () => {
   const handleCheck = () => setChecked(!checked)
 
   console.log(checked)
-
+  */
 
   const handleCheck = (e) => {
     const checked = e.target.checked;
@@ -84,7 +84,6 @@ const Form = () => {
     });
     return checked === true
   };
-  */
 
   const isEmpty = () => {
     if (password.length === 0 && email.length === 0) {
@@ -220,7 +219,7 @@ const Form = () => {
           //checked={isCheckboxValid} 
           error={errorCheckboxMessage}
           id={checkbox}
-          //onChange={handleCheck}
+          onChange={handleCheck}
           required
           type="checkbox"
         />
