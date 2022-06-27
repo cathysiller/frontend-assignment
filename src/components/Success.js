@@ -37,23 +37,15 @@ const Text = styled.p`
   text-align: center;
 `
 
-const Success = ({ 
-  disabled,
-  name,
-  onClick,
-  type
-}) => {
-
-  return (
-    <StyledDiv>
-      <img src={check} alt="Checkmark" />
-      <div>
-      <Header>Thank you!</Header>
-      <Text>Please check your email.</Text>
-      </div>
-      <img src={racecar} alt="Success" />
-    </StyledDiv>
-  )
-}
+const Success = (
+  <StyledDiv>
+    <img src={check} alt="Checkmark" />
+    <div>
+    <Header>Thank you!</Header>
+    <Text>Please check your email.</Text>
+    </div>
+    <img src={racecar} alt="Success" />
+  </StyledDiv>
+)
 
 export default Success
