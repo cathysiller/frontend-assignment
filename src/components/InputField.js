@@ -19,13 +19,14 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
+  border: 1px solid #898E9A;
   margin-bottom: 8px;
   padding: 16px 12px;
   width: -webkit-fill-available;
 
-  :error {
-    border-color: #F54545;
-  }
+  ${({ error }) => error && `
+    border: 2px solid #F54545;
+  `}
 `;
 
 const Error = styled.p`
@@ -58,6 +59,7 @@ const InputField = ({
         {label}
       </Label>
       <Input
+        error={error}
         id={id}
         onChange={onChange}
         placeholder={placeholder}
