@@ -10,12 +10,18 @@ const Div = styled.div`
 `;
 
 const Input = styled.input`
+  appearance: auto;
   background: #FFFFFF;
   border: 1px solid #C1C1C1;
   box-sizing: border-box;
   height: 16px;
   margin: 0 0 8px;
   width: 16px;
+
+  ${({ error }) => error && `
+    appearance: initial;
+    border: 2px solid #F54545;
+  `}
 `;
 
 const Label = styled.label`
@@ -44,11 +50,11 @@ const Error = styled.p`
   margin: 0 0;
 `
 
-
 const Checkbox = ({ error, id, onChange}) => (
   <CheckboxGroup>
     <Div>
       <Input
+        error={error}
         id={id}
         onChange={onChange}
         required
