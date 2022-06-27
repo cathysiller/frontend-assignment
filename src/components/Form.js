@@ -97,8 +97,8 @@ const Form = () => {
 
   // if password is not empty, check if valid password
   const isPasswordValid = (password) => {
+    // password needs to be at least 6 characters
     if (password.length <= 5) {
-      // if password does not meet requirements, let user know invalid
       setFormState({
         ...formState,
         errorPasswordMessage: "Password too short"
