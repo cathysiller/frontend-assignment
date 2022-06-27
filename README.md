@@ -1,4 +1,4 @@
-# Install Locally
+# Timescale Frontend Interview Assignment
 
 Thank you for taking the time to apply for a front end position at Timescale!
 We are asking applicants to build a small form in React. This exercise should take around 3-4 hours to complete at a time of your choosing and should follow the instructions below. If you have any questions, feel free to reach out to use and we'll be happy to help. Happy hacking!
