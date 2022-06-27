@@ -142,9 +142,10 @@ const Form = () => {
     return true;
   }
 
+  /*
   const isCheckboxValid = (e) =>  {
     const value = e.target.checked
-    console.log(value)
+    //console.log(value)
 
     setFormState({
       ...formState,
@@ -153,6 +154,7 @@ const Form = () => {
     });
     return true
   }
+  */
 
   const handleChange = (e) => {
     //let passwordError = "";
@@ -178,8 +180,12 @@ const Form = () => {
     const emailValid = isEmailValid(email);
     //const checkboxValid = handleCheck(checkbox)
 
-    console.log(checkbox)
+    //console.log(checkbox)
     //console.log(checked)
+
+    //console.log(isCheckboxValid.target.value)
+
+    console.log(checkbox)
 
     if (empty) {
       setFormState({
@@ -248,7 +254,7 @@ const Form = () => {
             required
             type="checkbox"
 
-            onClick={isCheckboxValid}
+            //onClick={isCheckboxValid}
           />
           <Button
             //disabled={!formState.email}
