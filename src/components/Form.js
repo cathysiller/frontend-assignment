@@ -8,9 +8,6 @@ import Success from "./Success";
 const Div = styled.div`
   background-color: #F7F8F8;
   left: 50%;
-  //margin: auto auto;
-  //max-height: 534px;
-  //max-width: 622px;
   padding: 80px 110px;
   position: absolute;
   top: 50%;
@@ -42,10 +39,10 @@ const Form = () => {
     email: ``,
     password: ``,
     checkbox: ``,
+    checked: false,
     errorEmailMessage: ``,
     errorPasswordMessage: ``,
     errorCheckboxMessage: ``,
-    passwordLength: ``,
     signupSuccessful: false,
     loading: false,
   });
@@ -58,39 +55,11 @@ const Form = () => {
     errorEmailMessage,
     errorPasswordMessage,
     errorCheckboxMessage,
-    passwordLength,
     loading,
     signupSuccessful,
   } = formState;
 
-  /*
-  const [checked, setChecked] = useState(false)
-  const handleCheck = () => setChecked(!checked)
-
-  console.log(checked)
-  */
-
-  const handleCheck = (e) => {
-    const checked = e.target.checked;
-    if (!checked) {
-      //console.log('I AM NOT CHECKED')
-      setFormState({
-        ...formState,
-        signupSuccessful: false,
-        errorCheckboxMessage: "Required"
-      });
-      return false;
-    } 
-
-    //console.log('I AM CHECKED')
-    setFormState({
-      ...formState,
-      //signupSuccessful: true,
-      errorCheckboxMessage: ""
-    });
-    return checked === true
-  };
-
+  // check if email and password are empty, display required error message
   const isEmpty = () => {
     if (password.length === 0 && email.length === 0) {
       setFormState({
@@ -98,8 +67,8 @@ const Form = () => {
         signupSuccessful: false,
         email: ``,
         password: ``,
-        errorEmailMessage: "Email required",
-        errorPasswordMessage: "Password required",
+        errorEmailMessage: "Invalid email",
+        errorPasswordMessage: "Password too short",
         errorCheckboxMessage: "Required"
       });
       return true
@@ -107,6 +76,7 @@ const Form = () => {
     return false
   }
 
+  // if email is not empty, check if valid email address
   const isEmailValid = (value) => {
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -125,6 +95,7 @@ const Form = () => {
     return true;
   };
 
+  // if password is not empty, check if valid password
   const isPasswordValid = (password) => {
     if (password.length <= 5) {
       // if password does not meet requirements, let user know invalid
@@ -142,69 +113,79 @@ const Form = () => {
     return true;
   }
 
-  const isCheckboxValid = (e) =>  {
-    const value = e.target.checked
-    console.log(value)
+  // see if checkbox is checked or not, required for submission
+  const handleCheck = (e) => {
+    const checked = e.target.checked;
+    if (checked === false) {
+      setFormState({
+        ...formState,
+        errorCheckboxMessage: "Required",
+        checked: false,
+      });
+      return false;
+    } else if (errorCheckboxMessage) {
+      setFormState({
+        ...formState,
+        errorCheckboxMessage: ""
+      });
+    }
 
     setFormState({
       ...formState,
-      //signupSuccessful: true,
-      errorCheckboxMessage: ""
+      errorCheckboxMessage: "",
+      checked: true,
     });
     return true
-  }
+  };
 
+  // update input values on change
   const handleChange = (e) => {
-    //let passwordError = "";
-
-    /*
-    if (e.target.id === "password" && password.length < 6) {
-      passwordError = "Password too short";
-    }
-    */
-
     setFormState({
       ...formState,
       [e.target.id]: e.target.value,
-      //passwordLength: passwordError //In here it display the error
     });
   }; 
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    const empty = isEmpty(email, password, checkbox);
+    const empty = isEmpty(email, password);
     const passwordValid = isPasswordValid(password);
     const emailValid = isEmailValid(email);
-    //const checkboxValid = handleCheck(checkbox)
+    const checkboxValid = formState.checked
 
-    console.log(checkbox)
-    //console.log(checked)
-
-    if (empty) {
+    if (empty && checkboxValid === false) {
       setFormState({
         ...formState,
         signupSuccessful: false,
         email: ``,
         password: ``,
         checkbox: ``,
-        errorEmailMessage: "Email required",
-        errorPasswordMessage: "Password required",
+        errorEmailMessage: "Invalid email",
+        errorPasswordMessage: "Password too short",
         errorCheckboxMessage: "Required"
       });
+    }
 
-      if (emailValid && passwordValid) {
+    if (!empty) {
+      if (emailValid && passwordValid && checkboxValid === true) {
         setFormState({
           ...formState,
           signupSuccessful: true,
           email: ``,
           password: ``,
           checkbox: ``,
+          checked: true,
+          errorEmailMessage: "",
+          errorPasswordMessage: "",
           errorCheckboxMessage: ""
         });
       }
     }
   };
+
+  console.log(formState)
+  //console.log(signupSuccessful)
 
   return (
     <>
@@ -217,8 +198,6 @@ const Form = () => {
         <Header>
           Let’s sign you up for Timescale Cloud
         </Header>
-
-
         <StyledForm onSubmit={onSubmit}>
           <InputField
             error={errorEmailMessage}
@@ -240,18 +219,13 @@ const Form = () => {
             value={password}
           />
           <Checkbox
-            //error={error}
-            //checked={isCheckboxValid} 
             error={errorCheckboxMessage}
             id={checkbox}
             onChange={handleCheck}
             required
             type="checkbox"
-
-            onClick={isCheckboxValid}
           />
           <Button
-            //disabled={!formState.email}
             error={errorCheckboxMessage}
             name="action"
             onClick={onSubmit}
@@ -260,14 +234,6 @@ const Form = () => {
           >
             {!loading && `Sign up`}
           </Button>
-
-          {loading && 
-            <p>THIS IS LOADING 👏🏾</p>
-          }
-
-          {signupSuccessful && 
-            <p>THIS IS SUCCESSFUL 👏🏾</p>
-          }
         </StyledForm>
       </Div>
     )}

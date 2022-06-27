@@ -36,7 +36,6 @@ const StyledButton = styled.button`
 `
 
 const Button = ({ 
-  disabled,
   name,
   onClick,
   primary,
