@@ -16,6 +16,13 @@ const Input = styled.input`
   height: 16px;
   margin: 0 0 8px;
   width: 16px;
+
+  ${({ error }) => error && `
+    // realized after I turned in assignment that I forgot these styles
+    // not the best solution, the border inside is showing and could be better
+    border: none;
+    outline: 2px solid #F54545;
+  `}
 `;
 
 const Label = styled.label`
@@ -44,11 +51,11 @@ const Error = styled.p`
   margin: 0 0;
 `
 
-
 const Checkbox = ({ error, id, onChange}) => (
   <CheckboxGroup>
     <Div>
       <Input
+        error={error}
         id={id}
         onChange={onChange}
         required
