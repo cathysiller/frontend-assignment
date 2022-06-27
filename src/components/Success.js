@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import check from '../images/check.svg';
-import logo from '../images/logo.svg';
 import racecar from '../images/racecar.svg';
 
 const StyledDiv = styled.div`
@@ -10,22 +9,10 @@ const StyledDiv = styled.div`
   display: flex;
   flex-direction: column;
   gap: 48px;
-  //height: 425.88px;
   justify-content: center;
   letter-spacing: -0.01em;
   padding: 80px 0px;
-  //width: 622px;
-
-  //margin: auto auto 32px;
-  //max-height: 534px;
-  //max-width: 622px;
   width: 100%;
-
-  /*
-  :disabled {
-    background-color: #FEDA8A;
-  }
-  */
 `
 
 const Header = styled.h1`

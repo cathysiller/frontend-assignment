@@ -7,15 +7,26 @@ import Success from "./Success";
 
 const Div = styled.div`
   background-color: #F7F8F8;
-  left: 50%;
-  padding: 80px 110px;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-
-  max-height: 534px;
-  max-width: 622px;
   width: 100%;
+
+  // not mobile
+  @media (min-width: 768px) {
+    left: 50%;
+    max-height: 534px;
+    max-width: 622px;
+    padding: 80px 110px;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  // mobile
+  @media (max-width: 768px) {
+    margin-top: 112px;
+    max-width: unset;
+    padding: 64px 24px;
+    width: unset;
+  }
 `;
 
 const Header = styled.h1`
@@ -29,6 +40,12 @@ const Header = styled.h1`
   margin: auto auto 32px;
   text-align: center;
   width: 464px;
+
+  // mobile
+  @media (max-width: 768px) {
+    padding: unset;
+    width: unset;
+  }
 `;
 
 const StyledForm = styled.form`
@@ -78,7 +95,7 @@ const Form = () => {
 
   // if email is not empty, check if valid email address
   const isEmailValid = (value) => {
-    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (!emailRegex.test(value)) {
       setFormState({
@@ -97,11 +114,18 @@ const Form = () => {
 
   // if password is not empty, check if valid password
   const isPasswordValid = (password) => {
-    // password needs to be at least 6 characters
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]/;
+    // password needs to be at least 6 characters, contain one number, and one special character
     if (password.length <= 5) {
       setFormState({
         ...formState,
         errorPasswordMessage: "Password too short"
+      });
+      return false;
+    } else if (!passwordRegex.test(password)) {
+      setFormState({
+        ...formState,
+        errorPasswordMessage: "Password needs to include one number and one special character"
       });
       return false;
     } else if (errorPasswordMessage) {

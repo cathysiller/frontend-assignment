@@ -2,12 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 const CheckboxGroup = styled.div`
-  //height: 105px;
   margin-bottom: 20px;
 `;
 
 const Div = styled.div`
-  //align-items: center;
   display: flex;
 `;
 
@@ -23,7 +21,6 @@ const Input = styled.input`
 const Label = styled.label`
   align-items: center;
   color: #333333;
-  //display: flex;
   font-family: Inter,sans-serif;
   font-size: 12px;
   font-style: normal;

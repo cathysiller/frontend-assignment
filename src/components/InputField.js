@@ -1,8 +1,7 @@
-import React, { memo } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const FormGroup = styled.div`
-  //height: 105px;
   margin-bottom: 16px;
   position: relative;
 `;
@@ -23,7 +22,6 @@ const Input = styled.input`
   margin-bottom: 8px;
   padding: 16px 12px;
   width: -webkit-fill-available;
-  //width: 100%;
 
   :error {
     border-color: #F54545;
@@ -54,8 +52,6 @@ const InputField = ({
     type,
     value,
   }) => {
-
-  //const [input, setInput] = useState();
 
   return (
     <FormGroup>
